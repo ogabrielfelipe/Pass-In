@@ -15,8 +15,8 @@ import rocketseat.com.passin.dto.general.ErrorResponseDTO;
 public class ExceptionEntityHandler {
 
     @ExceptionHandler(EventNotFoundException.class)
-    public ResponseEntity handleEventNotFound(EventNotFoundException exception){
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<ErrorResponseDTO> handleEventNotFound(EventNotFoundException exception){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponseDTO(exception.getMessage()));
     }
     @ExceptionHandler(EventFullException.class)
     public ResponseEntity<ErrorResponseDTO> handleEventFull(EventFullException exception){
@@ -24,17 +24,17 @@ public class ExceptionEntityHandler {
     }
 
     @ExceptionHandler(AttendeeNotFoundException.class)
-    public ResponseEntity handleAttendeeNotFound(AttendeeNotFoundException exception){
+    public ResponseEntity<ErrorResponseDTO> handleAttendeeNotFound(AttendeeNotFoundException exception){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponseDTO(exception.getMessage()));
     }
 
     @ExceptionHandler(AttendeeAlreadyExistException.class)
-    public ResponseEntity handleAttendeeAlreadyExist(AttendeeAlreadyExistException exception){
+    public ResponseEntity<ErrorResponseDTO> handleAttendeeAlreadyExist(AttendeeAlreadyExistException exception){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponseDTO(exception.getMessage()));
     }
 
     @ExceptionHandler(CheckInAlreadyExistsException.class)
-    public ResponseEntity handleCheckInAlreadyExist(CheckInAlreadyExistsException exception){
+    public ResponseEntity<ErrorResponseDTO> handleCheckInAlreadyExist(CheckInAlreadyExistsException exception){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponseDTO(exception.getMessage()));
     }
 }
