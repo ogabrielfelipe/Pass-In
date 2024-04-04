@@ -19,22 +19,22 @@ public class ExceptionEntityHandler {
         return ResponseEntity.notFound().build();
     }
     @ExceptionHandler(EventFullException.class)
-    public ResponseEntity<ErrorResponseDTO> handleEventFull(EventNotFoundException exception){
+    public ResponseEntity<ErrorResponseDTO> handleEventFull(EventFullException exception){
         return ResponseEntity.badRequest().body(new ErrorResponseDTO(exception.getMessage()));
     }
 
     @ExceptionHandler(AttendeeNotFoundException.class)
-    public ResponseEntity handleAttendeeNotFound(EventNotFoundException exception){
-        return ResponseEntity.notFound().build();
+    public ResponseEntity handleAttendeeNotFound(AttendeeNotFoundException exception){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponseDTO(exception.getMessage()));
     }
 
     @ExceptionHandler(AttendeeAlreadyExistException.class)
-    public ResponseEntity handleAttendeeAlreadyExist(EventNotFoundException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+    public ResponseEntity handleAttendeeAlreadyExist(AttendeeAlreadyExistException exception){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponseDTO(exception.getMessage()));
     }
 
     @ExceptionHandler(CheckInAlreadyExistsException.class)
-    public ResponseEntity handleCheckInAlreadyExist(EventNotFoundException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+    public ResponseEntity handleCheckInAlreadyExist(CheckInAlreadyExistsException exception){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponseDTO(exception.getMessage()));
     }
 }
